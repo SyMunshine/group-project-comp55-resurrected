@@ -6,12 +6,13 @@ public class Keybinds {
 	private int leftKeybind;
 	private int rightKeybind;
 	
-	public Keybinds() {
+	public Keybinds() { //default setting initializations. 
 		upKeybind = KeyEvent.VK_UP;
 		downKeybind = KeyEvent.VK_DOWN;
 		leftKeybind = KeyEvent.VK_LEFT;
 		rightKeybind = KeyEvent.VK_RIGHT;
 	}
+	//getters
 	public int getUpKeybind() {
 		return upKeybind;
 	}
@@ -24,6 +25,7 @@ public class Keybinds {
 	public int getRightKeybind() {
 		return rightKeybind;
 	}
+	//setters
 	public void setUpKeybind(int upKeybind) {
 		this.upKeybind = upKeybind;
 	}

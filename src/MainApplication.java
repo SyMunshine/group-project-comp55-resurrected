@@ -59,7 +59,7 @@ public class MainApplication extends GraphicsApplication implements ActionListen
 		game = new GamePane(this);
 		pause = new PausePane(this);
 		settings = new SettingsPane(this);
-		keybinds = new Keybinds();
+		keybinds = new Keybinds(); //must initialize keybinds before keybindspane or will cause a null error
 		keybindsPane = new KeybindsPane(this);
 		instructions = new InstructionsPane(this);
 		leaderboards = new LeaderboardsPane(this);

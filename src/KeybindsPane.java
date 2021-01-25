@@ -13,21 +13,25 @@ public class KeybindsPane extends GraphicsPane {
 
 	private GButton back;
 
+	//initializing buttons for key remapping
 	private GButton changeUpKeybind;
 	private GButton changeDownKeybind;
 	private GButton changeLeftKeybind;
 	private GButton changeRightKeybind;
 
+	//labels for keybinds 
 	private GLabel currentUpKeybind;
 	private GLabel currentDownKeybind;
 	private GLabel currentLeftKeybind;
 	private GLabel currentRightKeybind;
 
+	//labels that change depending on what they current keybind has been changed to. 
 	private GLabel upKeybind;
 	private GLabel downKeybind;
 	private GLabel leftKeybind;
 	private GLabel rightKeybind;
 
+	//records int value of keyboard presses
 	public int keyPress;
 	
 	private Keybinds keybinds;
@@ -51,7 +55,7 @@ public class KeybindsPane extends GraphicsPane {
 		currentLeftKeybind = new GLabel("Current Left Keybind",80, 225);
 		currentRightKeybind = new GLabel("Current Right Keybind",80, 275);
 
-
+		//default initialize labels
 		upKeybind = new GLabel(KeyEvent.getKeyText(keybinds.getUpKeybind()),280, 125);
 		downKeybind = new GLabel(KeyEvent.getKeyText(keybinds.getDownKeybind()),280, 175);
 		leftKeybind = new GLabel(KeyEvent.getKeyText(keybinds.getLeftKeybind()),280, 225);
@@ -102,38 +106,51 @@ public class KeybindsPane extends GraphicsPane {
 		program.remove(rightKeybind);
 	}
 
+	//on mouse event actions.... 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (obj == back) {
 			program.switchToSettings();
+			//back button takes you back to settings panel
 		}
-		
+		//if change up keybind has been pressed
 		if(obj == changeUpKeybind) {
 			//needs to wait for a keypress
 			keybinds.setUpKeybind(keyPress);
+			//change keybind to new key
 			upKeybind.setLabel(KeyEvent.getKeyText(keybinds.getUpKeybind()));
+			//update label indicating what it's been changed to. 
 			
 		}
+		//if change down keybind has been pressed
 		if(obj == changeDownKeybind) {
 			keybinds.setDownKeybind(keyPress);
+			//change keybind to new key
 			downKeybind.setLabel(KeyEvent.getKeyText(keybinds.getDownKeybind()));
-
+			//update label indicating what it's been changed to. 
 
 		}
+		//if change left keybind has been pressed
+
 		if(obj == changeLeftKeybind) {
 			keybinds.setLeftKeybind(keyPress);
 			leftKeybind.setLabel(KeyEvent.getKeyText(keybinds.getLeftKeybind()));
 
 
 		}
+		//if change right keybind has been pressed
 		if(obj == changeRightKeybind) {
 			keybinds.setRightKeybind(keyPress);
+			//change keybind to new key
 			rightKeybind.setLabel(KeyEvent.getKeyText(keybinds.getRightKeybind()));
+			//update label indicating what it's been changed to. 
+
 
 		}
 
 	}
+	//on keyboard event actions... 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		keyPress = e.getKeyCode();
