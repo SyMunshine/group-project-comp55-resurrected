@@ -23,6 +23,8 @@ public class GamePane extends GraphicsPane {
 
 	private GRect rect1;
 
+	private Keybinds keybinds;
+
 	public GamePane(MainApplication app) {
 		super();
 		this.program = app;
@@ -49,9 +51,10 @@ public class GamePane extends GraphicsPane {
 		rect1.setFillColor(new Color(255,255,255,128));
 		rect1.setFilled(true);
 		rect1.setColor(Color.black);
-		
+
+		keybinds = program.getKeybinds();
 	}
-	
+
 	public Player getPlayer() {
 		return player;
 	}
@@ -102,7 +105,7 @@ public class GamePane extends GraphicsPane {
 			program.remove(f.img);
 		}
 	}
-	
+
 	public void moveAllFish() {
 		gameBackground.sendToBack();
 		pause.sendToFront();
@@ -124,9 +127,9 @@ public class GamePane extends GraphicsPane {
 				f.img.move(-1, 0);
 			}
 		}
-		
+
 	}
-	
+
 	public void addEnemy(int type) {
 		Fish fish = new Fish(program);
 		switch(type) {
@@ -206,12 +209,12 @@ public class GamePane extends GraphicsPane {
 				fish.setSize(9);
 			}	
 			break;
-	}
+		}
 		System.out.println("type of fish: " + type + "\n");
 		program.add(fish.img);
-}
-	
-/*	public boolean checkSmallerFish() { //checks for a guaranteed smaller fish in the array
+	}
+
+	/*	public boolean checkSmallerFish() { //checks for a guaranteed smaller fish in the array
 		boolean check = false;
 		for(Fish f: fishLtoR) {
 			if((f.getSize()/2) + 1 < (program.spawnTypes)) {
@@ -225,8 +228,8 @@ public class GamePane extends GraphicsPane {
 		}
 		return check;
 	}
-	*/
-	
+	 */
+
 
 	public void addAllFish() {
 		for(Fish f: fishLtoR) {
@@ -282,7 +285,7 @@ public class GamePane extends GraphicsPane {
 
 		if (pressed.size() > 1) { // if two keys are pressed, move diagonally
 			Integer[] arr = pressed.toArray(new Integer[] {}); //save multiple key pressed into an array
-			if ( ((arr[0] == KeyEvent.VK_UP && arr[1] == KeyEvent.VK_RIGHT) || (arr[1] == KeyEvent.VK_UP && arr[0] == KeyEvent.VK_RIGHT)) && (!player.isAtTop()) && (!player.isAtRight())){
+			if ( ((arr[0] == keybinds.getUpKeybind() && arr[1] == keybinds.getRightKeybind()) || (arr[1] == keybinds.getUpKeybind() && arr[0] == keybinds.getRightKeybind())) && (!player.isAtTop()) && (!player.isAtRight())){
 				if(player.getRTL()) {
 					player.getFish().setImage("PlainOldFishFlipped.png");
 					player.getFish().setSize(90,90);
@@ -290,9 +293,9 @@ public class GamePane extends GraphicsPane {
 					player.setRTL(false);
 				}
 				player.getFish().move(2, -2);
-				
+
 			}
-			else if( ((arr[0] == KeyEvent.VK_UP && arr[1] == KeyEvent.VK_LEFT ) || (arr[1] == KeyEvent.VK_UP && arr[0] == KeyEvent.VK_LEFT ) && (!player.isAtTop()) && (!player.isAtLeft())) 
+			else if( ((arr[0] == keybinds.getUpKeybind() && arr[1] == keybinds.getLeftKeybind() ) || (arr[1] == keybinds.getUpKeybind() && arr[0] == keybinds.getLeftKeybind() ) && (!player.isAtTop()) && (!player.isAtLeft())) 
 					) {
 				if(!player.getRTL()) {
 					player.getFish().setImage("PlainOldFish.png");
@@ -301,10 +304,10 @@ public class GamePane extends GraphicsPane {
 					player.setRTL(true);
 				}
 				player.getFish().move(-2, -2);
-				
+
 			}
-			else if(((arr[0] == KeyEvent.VK_DOWN && arr[1] == KeyEvent.VK_RIGHT) ||
-					(arr[1] == KeyEvent.VK_DOWN && arr[0] == KeyEvent.VK_RIGHT)) && (!player.isAtBottom()) && (!player.isAtRight()) ) {
+			else if(((arr[0] == keybinds.getDownKeybind() && arr[1] == keybinds.getRightKeybind()) ||
+					(arr[1] == keybinds.getDownKeybind() && arr[0] == keybinds.getRightKeybind())) && (!player.isAtBottom()) && (!player.isAtRight()) ) {
 				if(player.getRTL()) {
 					player.getFish().setImage("PlainOldFishFlipped.png");
 					player.getFish().setSize(90,90);
@@ -312,10 +315,10 @@ public class GamePane extends GraphicsPane {
 					player.setRTL(false);
 				}
 				player.getFish().move(2, 2);
-				
+
 			}
-			else if((arr[0] == KeyEvent.VK_DOWN && arr[1] == KeyEvent.VK_LEFT) ||
-					(arr[1] == KeyEvent.VK_DOWN && arr[0] == KeyEvent.VK_LEFT)  && (!player.isAtBottom()) && (!player.isAtLeft()) ) {
+			else if((arr[0] == keybinds.getDownKeybind() && arr[1] == keybinds.getLeftKeybind()) ||
+					(arr[1] == keybinds.getDownKeybind() && arr[0] == keybinds.getLeftKeybind())  && (!player.isAtBottom()) && (!player.isAtLeft()) ) {
 				if(!player.getRTL()) {
 					player.getFish().setImage("PlainOldFish.png");
 					player.getFish().setSize(90,90);
@@ -323,26 +326,23 @@ public class GamePane extends GraphicsPane {
 					player.setRTL(true);
 				}
 				player.getFish().move(-2, 2);
-				
+
 			}
 		}
 
 		else { // otherwise, move in one direction
-			switch (keyPress) {
-			case KeyEvent.VK_UP:
-				
+
+			if (keyPress == keybinds.getUpKeybind()) {
 				if(!player.isAtTop()) {
 					player.getFish().move(0, -2);
 				}
-				break;
-			case KeyEvent.VK_DOWN:
-				
+			}
+			else if (keyPress == keybinds.getDownKeybind()) {				
 				if(!player.isAtBottom()) {
 					player.getFish().move(0, 2);
-				}
-				break;
-			case KeyEvent.VK_LEFT:
-				
+				}}
+			else if (keyPress == keybinds.getLeftKeybind()) {
+
 				if(!player.getRTL()) {
 					player.getFish().setImage("PlainOldFish.png");
 					player.getFish().setSize(90,90);
@@ -352,9 +352,9 @@ public class GamePane extends GraphicsPane {
 				if(!player.isAtLeft()) {
 					player.getFish().move(-2, 0);
 				}
-				break;
-			case KeyEvent.VK_RIGHT:
-				
+			}
+			else if (keyPress == keybinds.getRightKeybind()) {
+
 				if(player.getRTL()) {
 					player.getFish().setImage("PlainOldFishFlipped.png");
 					player.getFish().setSize(90,90);
@@ -364,9 +364,9 @@ public class GamePane extends GraphicsPane {
 				if(!player.isAtRight()) {
 					player.getFish().move(2, 0);
 				}
-				break;
 			}
 		}
+
 	} 
 
 	@Override

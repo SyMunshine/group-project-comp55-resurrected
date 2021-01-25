@@ -12,6 +12,7 @@ public class SettingsPane extends GraphicsPane {
 	private GButton sound;
 	private GImage background;
 	private GButton back;
+	private GButton keybinds;
 	private GRect rect1;
 	private GLabel title;
 	//private GObject object[]= {sound, background, back, rect1, title};
@@ -20,7 +21,9 @@ public class SettingsPane extends GraphicsPane {
 	public SettingsPane(MainApplication app) {
 		this.program = app;
 		sound = new GButton("Sound on", 280, 250, 200, 50);
-		back = new GButton("Back", 280,350,200,50);
+		back = new GButton("Back", 280,450,200,50);
+		keybinds = new GButton("Keybinds", 280,350,200,50);
+
 		background = new GImage("ocean.gif",0,0);
 		background.setBounds(0, 0, program.WINDOW_WIDTH, program.WINDOW_HEIGHT);
 		
@@ -45,6 +48,9 @@ public class SettingsPane extends GraphicsPane {
 		}
 		program.add(sound);
 		program.add(back);
+		program.add(keybinds);
+
+		
 	}
 
 	@Override
@@ -55,6 +61,8 @@ public class SettingsPane extends GraphicsPane {
 		program.remove(title);
 		program.remove(sound);
 		program.remove(back);
+		program.remove(keybinds);
+
 	}
 
 	@Override
@@ -75,6 +83,9 @@ public class SettingsPane extends GraphicsPane {
 				sound.setLabel("Sound on");
 				program.playMenuMusic();
 			}
+		}
+		if (obj == keybinds) {
+			program.switchToKeybinds();
 		}
 	}
 

@@ -9,6 +9,8 @@ import javax.swing.Timer;
 import acm.graphics.GLabel;
 import acm.graphics.GRectangle;
 import acm.util.RandomGenerator;
+import java.awt.event.KeyEvent;
+
 
 public class MainApplication extends GraphicsApplication implements ActionListener {
 	public static final int WINDOW_WIDTH = 800;
@@ -19,12 +21,15 @@ public class MainApplication extends GraphicsApplication implements ActionListen
 	private MenuPane menu;
 	private PausePane pause;
 	private SettingsPane settings;
+	private KeybindsPane keybindsPane;
 	private InstructionsPane instructions;
 	private LeaderboardsPane leaderboards;
 	private LosePane lose;
 	private Wave wave;
 	private Garbage garbage;
 	private int nextScore = 50;
+	
+	private Keybinds keybinds;
 
 	public int count = 0;
 	public int spawnTypes = 0;
@@ -34,6 +39,7 @@ public class MainApplication extends GraphicsApplication implements ActionListen
 	public RandomGenerator rgen;
 	public GamePane game;
 
+	
 
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -53,6 +59,8 @@ public class MainApplication extends GraphicsApplication implements ActionListen
 		game = new GamePane(this);
 		pause = new PausePane(this);
 		settings = new SettingsPane(this);
+		keybinds = new Keybinds();
+		keybindsPane = new KeybindsPane(this);
 		instructions = new InstructionsPane(this);
 		leaderboards = new LeaderboardsPane(this);
 		menu = new MenuPane(this);
@@ -93,6 +101,10 @@ public class MainApplication extends GraphicsApplication implements ActionListen
 
 	public void switchToSettings() {
 		switchToScreen(settings);
+	}
+	
+	public void switchToKeybinds() {
+		switchToScreen(keybindsPane);
 	}
 
 	public void switchToInstructions() {
@@ -283,5 +295,13 @@ public class MainApplication extends GraphicsApplication implements ActionListen
 	public GamePane getGame() {
 		return game;
 	}
+	public Keybinds getKeybinds() {
+		return keybinds;
+	}
+
 }
+
+
+
+
 
